@@ -56,7 +56,7 @@ class PlayerToGoItem extends StatelessWidget {
             : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Text(
           (toGoValue == null) ? "" : toGoValue.toString(),
