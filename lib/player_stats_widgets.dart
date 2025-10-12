@@ -50,43 +50,18 @@ class PlayerStatsItem extends StatelessWidget {
         color: theme.colorScheme.inversePrimary,
         border: Border.all(color: theme.colorScheme.inversePrimary),
       ),
-      height: 20, 
-      child: Text("${item.key}: ${item.value}",
-              textAlign: TextAlign.left,
-              style: TextStyle(color: theme.colorScheme.primary,)
-      )
-      );
-  }
-}
-
-class PlayerStatsSection extends StatelessWidget {
-  const PlayerStatsSection({super.key, required this.player});
-
-  final PlayerInfo player;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        PlayerStatsTitle(statsTitle: "${player.name} Stats"),
-
-        Expanded(child: 
-          Column(children: [
-            for (MapEntry<String, int> item in player.stats.entries)
-            PlayerStatsItem(item: item),
-          ])
-        ),
-      ],
+      height: 20,
+      child: Text(
+        "${item.key}: ${item.value}",
+        textAlign: TextAlign.left,
+        style: TextStyle(color: theme.colorScheme.primary),
+      ),
     );
   }
 }
 
-
-
-class PlayerStats extends StatelessWidget {
-  const PlayerStats({super.key, required this.stats});
+class PlayerStatsList extends StatelessWidget {
+  const PlayerStatsList({super.key, required this.stats});
 
   // final List<int> stats;
   final Map<String, int> stats;
@@ -186,5 +161,31 @@ class PlayerStats extends StatelessWidget {
     // ),
     // ),
     // );
+  }
+}
+
+class PlayerStatsSection extends StatelessWidget {
+  const PlayerStatsSection({super.key, required this.player});
+
+  final PlayerInfo player;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        PlayerStatsTitle(statsTitle: "${player.name} Stats"),
+
+        Expanded(
+          child: Column(
+            children: [
+              for (MapEntry<String, int> item in player.stats.entries)
+                PlayerStatsItem(item: item),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
