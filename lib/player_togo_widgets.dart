@@ -1,7 +1,8 @@
+import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
 
-class ToGoTitle extends StatelessWidget {
-  const ToGoTitle({super.key, required this.toGoTitle});
+class PlayerToGoTitle extends StatelessWidget {
+  const PlayerToGoTitle({super.key, required this.toGoTitle});
 
   final String toGoTitle;
 
@@ -25,9 +26,9 @@ class ToGoTitle extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-                toGoTitle,
-                style: TextStyle(color: theme.colorScheme.primary),
-                textAlign: TextAlign.center,
+            toGoTitle,
+            style: TextStyle(color: theme.colorScheme.primary),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -35,8 +36,8 @@ class ToGoTitle extends StatelessWidget {
   }
 }
 
-class ToGoItem extends StatelessWidget {
-  const ToGoItem({super.key, required this.toGoValue});
+class PlayerToGoItem extends StatelessWidget {
+  const PlayerToGoItem({super.key, required this.toGoValue});
 
   final int? toGoValue;
 
@@ -55,39 +56,29 @@ class ToGoItem extends StatelessWidget {
             : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-
-      child: Text(
-        (toGoValue == null) ? "" : toGoValue.toString(),
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: theme.colorScheme.onPrimaryContainer,
-          fontSize: 20,
+      child: Container(
+        width: double.infinity,
+        child: Text(
+          (toGoValue == null) ? "" : toGoValue.toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: theme.colorScheme.onPrimaryContainer,
+            fontSize: 20,
+          ),
         ),
       ),
     );
   }
 }
 
-class PlayerToGoSection extends StatelessWidget {
-  const PlayerToGoSection({super.key, required this.toGo});
+class PlayerToGoList extends StatelessWidget {
+  const PlayerToGoList({super.key, required this.player});
+  final PlayerInfo player;
 
-  final List<int> toGo;
+  // const PlayerToGoList({super.key, required this.toGoUpdate, required this.startScore,});
 
-  @override
-  Widget build(BuildContext context) {
-    return ToGoTitle(toGoTitle: "To go");
-  }
-}
-
-class ToGoCounter extends StatelessWidget {
-  const ToGoCounter({
-    super.key,
-    required this.toGoUpdate,
-    required this.startScore,
-  });
-
-  final List<int> toGoUpdate;
-  final int startScore;
+  // final List<int> toGoUpdate;
+  // final int startScore;
 
   @override
   Widget build(BuildContext context) {
@@ -108,14 +99,17 @@ class ToGoCounter extends StatelessWidget {
       // surfaceTintColor: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(0.8),
-
+        child: Column(children: [
+          for (int scoreToGo in player.toGo)
+            PlayerToGoItem(toGoValue: scoreToGo)
+        ],)
         // child: Column(
         //       mainAxisAlignment: MainAxisAlignment.center,
         //       mainAxisSize: MainAxisSize.min,
         //       children: [
-        child: ListView(
-          children: [for (int u in toGoUpdate) ToGoItem(toGoValue: u)],
-        ),
+        // child: ListView(
+        //   children: [for (int u in toGoUpdate) PlayerToGoItem(toGoValue: u)],
+        // ),
         //   ],
         // ),
         //   Row(
@@ -133,6 +127,23 @@ class ToGoCounter extends StatelessWidget {
         // ],
         // ),
       ),
+    );
+  }
+}
+
+class PlayerToGoSection extends StatelessWidget {
+  const PlayerToGoSection({super.key, required this.player});
+
+  final PlayerInfo player;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        PlayerToGoTitle(toGoTitle: "To go"),
+        // PlayerToGoItem(toGoValue: player.toGo[0]),
+        PlayerToGoList(player: player),
+      ],
     );
   }
 }
