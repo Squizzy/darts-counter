@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FnKeys extends StatelessWidget {
-  const FnKeys({super.key});
+class ShortcutButtons extends StatelessWidget {
+  const ShortcutButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
