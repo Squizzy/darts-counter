@@ -8,7 +8,7 @@ class PlayerInfo {
 
   PlayerInfo({required this.iD, required this.name, required this.startValue}) {
     toGo.add(startValue);
-    initStats();
+    // initStats();
   }
 
   void initStats() {
