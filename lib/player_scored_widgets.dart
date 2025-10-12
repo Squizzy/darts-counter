@@ -1,6 +1,7 @@
-import 'dart:developer';
-
+import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
+
+import 'dart:developer';
 
 class PlayerScoredTitle extends StatelessWidget {
   const PlayerScoredTitle({super.key, required this.scoredTitle});
@@ -56,18 +57,30 @@ class PlayerScoredItem extends StatelessWidget {
           width: 0.2,
         ),
         color: (scoreValue == null)
-            ? theme.colorScheme.primary
-            : theme.colorScheme.inversePrimary,
+            ? theme.colorScheme.inversePrimary
+            : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
 
       child: TextField(
-        style: TextStyle(fontSize: 19),
+        style: TextStyle(
+          fontSize: 19,
+          color: (scoreValue == null)
+              ? theme.colorScheme.inversePrimary
+              : theme.colorScheme.primary,
+        ),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.all(0),
-          hintText: (scoreValue == null) ? "" : "Enter score",
+          hintText: (scoreValue == null)
+              ? "Enter score"
+              : scoreValue.toString(),
+          hintStyle: TextStyle(
+            color: (scoreValue == null)
+                ? theme.colorScheme.inversePrimary
+                : theme.colorScheme.primary,
+          ),
         ),
         onSubmitted: (text) {
           log(
@@ -80,21 +93,13 @@ class PlayerScoredItem extends StatelessWidget {
   }
 }
 
-class PlayerScoredSection extends StatelessWidget {
-  const PlayerScoredSection({super.key, required this.scored});
+class PlayerScoredList extends StatelessWidget {
+  const PlayerScoredList({super.key, required this.player});
+  // const PlayerScoredList({super.key, required this.scoredPointsList});
 
-  final List<int> scored;
+  // final List<int> scoredPointsList;
 
-  @override
-  Widget build(BuildContext context) {
-    return PlayerScoredTitle(scoredTitle: "Scored");
-  }
-}
-
-class Scored extends StatelessWidget {
-  const Scored({super.key, required this.currentScoreUpdate});
-
-  final List<int> currentScoreUpdate;
+  final PlayerInfo player;
 
   @override
   Widget build(BuildContext context) {
@@ -111,23 +116,33 @@ class Scored extends StatelessWidget {
         color: theme.colorScheme.primary,
       ),
 
-      child: ListView(
+      child: Column(
         children: [
-          for (int s = 0; s <= currentScoreUpdate.length; s++)
-            PlayerScoredItem(
-              scoreValue: (s == 0) ? null : currentScoreUpdate[s],
-            ),
+          for (int scoredPoints in player.scored)
+            PlayerScoredItem(scoreValue: scoredPoints),
+          PlayerScoredItem(scoreValue: null),
         ],
-        // padding: const EdgeInsets.all(8.0),
-        // children: <Widget>[
-        //   for (int s = 0; s <= currentScoreUpdate.length; s++)
-        //   ListTile(
-        //         visualDensity: VisualDensity.compact,
-        //         title: ScoreItem(scoreValue: (s == 0) ? null : currentScoreUpdate[s-1]),
-        //         titleAlignment: ListTileTitleAlignment.center,
-        //   ),
-        // ],
       ),
+    );
+  }
+}
+
+class PlayerScoredSection extends StatelessWidget {
+  const PlayerScoredSection({super.key, required this.player});
+
+  final PlayerInfo player;
+
+  @override
+  Widget build(BuildContext context) {
+    // return PlayerScoredTitle(scoredTitle: "Scored");
+    // return PlayerScoredItem(scoreValue: null);
+    // return PlayerScoredList(scoredPointsList: player.scored);
+    return Column(
+      children: [
+        PlayerScoredTitle(scoredTitle: "Scored"),
+        // PlayerScoredItem(scoreValue: (player.scored.isEmpty) ? null : player.scored[2]),
+        PlayerScoredList(player: player),
+      ],
     );
   }
 }
