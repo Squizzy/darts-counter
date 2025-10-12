@@ -20,28 +20,16 @@ class PlayerDebugSection extends StatelessWidget {
         player.iD
             ? Row(
                 children: [
-                  Expanded(flex: 3, child: PlayerStatsSection(player: player)),
-                  Expanded(
-                    flex: 1,
-                    child: PlayerScoredSection(scored: player.scored),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: PlayerToGoSection(toGo: player.toGo),
-                  ),
+                  // Expanded(flex: 3, child: PlayerStatsSection(player: player)),
+                  Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                  // Expanded(flex: 1, child: PlayerToGoSection(player: player)),
                 ],
               )
             : Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: PlayerScoredSection(scored: player.scored),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: PlayerToGoSection(toGo: player.toGo),
-                  ),
-                  Expanded(flex: 3, child: PlayerStatsSection(player: player)),
+                  Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                  // Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                  // Expanded(flex: 3, child: PlayerStatsSection(player: player)),
                 ],
               ),
       ],
@@ -56,34 +44,7 @@ class PlayerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Map<String:Widget> PlayerData;
-    // Create a list of widgets to be able to display in the desired order
-    Map<String, Column> playerInfoToDisplay = {
-      "PlayerStats": Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          // Text("Stats")
-          PlayerStatsTitle(statsTitle: "${player.name} stats"),
-          // Expanded(child: PlayerStats(stats: player.stats)),
-        ],
-      ),
-
-      "PlayerScored": Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          PlayerScoredTitle(scoredTitle: "Scored"),
-          // Scored(currentScoreUpdate: player.scored),
-        ],
-      ),
-
-      "PlayerToGo": Column(
-        children: [
-          ToGoTitle(toGoTitle: "To go"),
-          // ToGoCounter(toGoUpdate: player.toGo, startScore: player.startValue),
-        ],
-      ),
-    };
-
+  
     return Container(
       padding: EdgeInsets.all(8.0),
 
@@ -93,41 +54,21 @@ class PlayerSection extends StatelessWidget {
 
           player.iD
               ? // Display the order of the columns depending on the player
-                Row(
+                Expanded( child: Row(
                   children: [
-                    // Text("Player A"),
-                    Expanded(
-                      flex: 3,
-                      child: playerInfoToDisplay["PlayerStats"]!,
-                    ),
-                    // child: PlayerStats(stats: player.stats)),
-                    Expanded(
-                      flex: 1,
-                      child: playerInfoToDisplay["PlayerScored"]!,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: playerInfoToDisplay["PlayerToGo"]!,
-                    ),
-                  ],
-                )
-              : Row(
+                    // Player A layout
+                    Expanded(flex: 3, child: PlayerStatsSection(player: player)),
+                    Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                    Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                  ]))
+
+              : Expanded(child: Row(
                   children: [
-                    // Text("Player B"),
-                    Expanded(
-                      flex: 1,
-                      child: playerInfoToDisplay["PlayerScored"]!,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: playerInfoToDisplay["PlayerToGo"]!,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: playerInfoToDisplay["PlayerStats"]!,
-                    ),
-                  ],
-                ),
+                    // Player B layout
+                    Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                    Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                    Expanded(flex: 3, child: PlayerStatsSection(player: player)),
+                  ]),),
 
           PlayerRemainder(remainder: player.remainder()),
         ],
