@@ -29,6 +29,7 @@ class PlayerToGoTitle extends StatelessWidget {
             toGoTitle,
             style: TextStyle(color: theme.colorScheme.primary),
             textAlign: TextAlign.center,
+
           ),
         ),
       ),
@@ -49,23 +50,33 @@ class PlayerToGoItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           color: theme.colorScheme.onPrimaryContainer,
-          width: 0.2,
+          width: 2,
+          strokeAlign: BorderSide.strokeAlignCenter
         ),
         color: (toGoValue == null)
             ? theme.colorScheme.inversePrimary
             : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-      child: SizedBox(
+
+      child: Padding(
+        padding: EdgeInsets.all(0.0),
+        child: Container(
+        height: 30,
         width: double.infinity,
+        alignment: Alignment.center,
+
         child: Text(
-          (toGoValue == null) ? "" : toGoValue.toString(),
           textAlign: TextAlign.center,
+          maxLines: 1,
           style: TextStyle(
-            color: theme.colorScheme.onPrimaryContainer,
-            fontSize: 20,
+            color: theme.colorScheme.primary,
+            fontSize: 15,
+            fontWeight: FontWeight.bold
           ),
+          (toGoValue == null) ? "" : toGoValue.toString(),
         ),
+      ),
       ),
     );
   }
@@ -86,6 +97,7 @@ class PlayerToGoList extends StatelessWidget {
 
     return Container(
       // color: theme.colorScheme.primary,
+      
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.elliptical(20.0, 8.0),
@@ -98,7 +110,7 @@ class PlayerToGoList extends StatelessWidget {
       // shadowColor: theme.colorScheme.primary,
       // surfaceTintColor: theme.colorScheme.primary,
       child: Padding(
-        padding: const EdgeInsets.all(0.8),
+        padding: const EdgeInsets.all(0.0),
         child: Column(children: [
           for (int scoreToGo in player.toGo)
             PlayerToGoItem(toGoValue: scoreToGo)
@@ -142,7 +154,7 @@ class PlayerToGoSection extends StatelessWidget {
       children: [
         PlayerToGoTitle(toGoTitle: "To go"),
         // PlayerToGoItem(toGoValue: player.toGo[0]),
-        PlayerToGoList(player: player),
+        Expanded(child: PlayerToGoList(player: player)),
       ],
     );
   }
