@@ -39,55 +39,103 @@ class PlayerScoredTitle extends StatelessWidget {
   }
 }
 
-class PlayerScoredItem extends StatelessWidget {
-  const PlayerScoredItem({super.key, required this.scoreValue});
+class PlayerScoredItem extends StatefulWidget {
+  const PlayerScoredItem({
+    super.key,
+    required this.player,
+    required this.scoreValue,
+  });
+
+  final PlayerInfo player;
+  final int? scoreValue;
+
+  @override
+  State<StatefulWidget> createState() => _PlayerScoredItem();
+}
+
+class _PlayerScoredItem extends State<PlayerScoredItem> {
+  // _PlayerScoredItem({required this.player, required this.scoreValue});
+  // const PlayerScoredItem({super.key, required this.player, required this.scoreValue});
+
+  // const PlayerScoredItem({
+  //   super.key,
+  //   required this.player,
+  //   required this.scoreValue,
+  // });
+  // final PlayerInfo player = player;
   // : _height = scoreValue == null ? null : 30;
 
-  final int? scoreValue;
+  // int? scoreValue = widget.scoreValue;
   // final double? _height;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final TextEditingController myController = TextEditingController();
 
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
           color: theme.colorScheme.onPrimaryContainer,
-          width: 0.2,
+          width: 2,
+          strokeAlign: BorderSide.strokeAlignCenter
+
         ),
-        color: (scoreValue == null)
+        color: (widget.scoreValue == null)
             ? theme.colorScheme.inversePrimary
             : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
 
-      child: TextField(
-        style: TextStyle(
-          fontSize: 19,
-          color: (scoreValue == null)
-              ? theme.colorScheme.inversePrimary
-              : theme.colorScheme.primary,
-        ),
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.all(0),
-          hintText: (scoreValue == null)
-              ? "Enter score"
-              : scoreValue.toString(),
-          hintStyle: TextStyle(
-            color: (scoreValue == null)
-                ? theme.colorScheme.inversePrimary
+      child: Container(
+        height: 30,
+        alignment: Alignment.center,
+        child: TextField(
+          controller: myController,
+          style: TextStyle(
+            fontSize: 15,
+            color: (widget.scoreValue == null)
+                ? theme.colorScheme.primary
                 : theme.colorScheme.primary,
+            fontWeight: FontWeight.bold
+
           ),
+
+          textAlign: TextAlign.center,
+
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            isDense: true,
+            contentPadding: EdgeInsets.all(0),
+            hintText: (widget.scoreValue == null)
+                ? "Enter score"
+                : widget.scoreValue.toString(),
+            hintStyle: TextStyle(
+              color: (widget.scoreValue == null)
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.primary,
+              fontSize: 15,
+            ),
+            // hintFadeDuration: Duration(seconds: 2),
+          ),
+
+          onSubmitted: (text) {
+            if (int.tryParse(text) != null) {
+              widget.player.scoredList.add(int.parse(text));
+            }
+            // setState(() {
+            print(widget.player.scoredList);
+            setState(() {
+              widget.player.recalculateToGo();
+            });
+            print(widget.player.toGo);
+            // (context as Element).markNeedsBuild();
+            log(
+              'onSubmitted: $text (${text.characters.length})',
+              name: "PlayerScoredItem",
+            );
+          },
         ),
-        onSubmitted: (text) {
-          log(
-            'onSubmitted: $text (${text.characters.length})',
-            name: "PlayerScoredItem",
-          );
-        },
       ),
     );
   }
@@ -118,9 +166,10 @@ class PlayerScoredList extends StatelessWidget {
 
       child: Column(
         children: [
-          for (int scoredPoints in player.scored)
-            PlayerScoredItem(scoreValue: scoredPoints),
-          PlayerScoredItem(scoreValue: null),
+          PlayerScoredItem(scoreValue: null, player: player),
+          for (int scoredPoints in player.scoredList)
+            PlayerScoredItem(scoreValue: scoredPoints, player: player),
+          PlayerScoredItem(scoreValue: null, player: player),
         ],
       ),
     );
@@ -141,7 +190,7 @@ class PlayerScoredSection extends StatelessWidget {
       children: [
         PlayerScoredTitle(scoredTitle: "Scored"),
         // PlayerScoredItem(scoreValue: (player.scored.isEmpty) ? null : player.scored[2]),
-        PlayerScoredList(player: player),
+        Expanded(child: PlayerScoredList(player: player)),
       ],
     );
   }
