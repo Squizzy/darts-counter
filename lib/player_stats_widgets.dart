@@ -49,6 +49,8 @@ class PlayerStatsItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.inversePrimary,
         border: Border.all(color: theme.colorScheme.inversePrimary),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+
       ),
       height: 20,
       child: Text(
@@ -61,13 +63,36 @@ class PlayerStatsItem extends StatelessWidget {
 }
 
 class PlayerStatsList extends StatelessWidget {
-  const PlayerStatsList({super.key, required this.stats});
+  const PlayerStatsList({super.key, required this.player});
+
+  final PlayerInfo player;
+  // const PlayerStatsList({super.key, required this.stats});
 
   // final List<int> stats;
-  final Map<String, int> stats;
+  // final Map<String, int> stats;
 
   @override
   Widget build(BuildContext context) {
+    if (player.stats.isNotEmpty) {
+      return DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Theme.of(context).colorScheme.inversePrimary,
+              // border:Border.all(style: BorderStyle.none, width: 5 ),
+              // border:BoxBorder.all(style: BorderStyle.none, width: 5 )
+              
+            ), 
+            child: Column(
+        children: [
+          for (MapEntry<String, int> item in player.stats.entries)
+            PlayerStatsItem(item: item),
+        ],
+            ),
+      );
+    } else {
+      return Container();
+    }
+
     // final theme = Theme.of(context);
 
     // return Container(
@@ -91,23 +116,23 @@ class PlayerStatsList extends StatelessWidget {
 
     // return Text('${item.key}: ${item.value}') for item in stats.entries;
 
-    return Flexible(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        // shrinkWrap: true,
-        itemCount: stats.length,
-        itemBuilder: (context, index) {
-          final item = stats.entries.elementAt(index);
-          return SizedBox(
-            height: 10,
-            child: Text("${item.key}: ${item.value}"),
-          );
-        },
-      ),
-      // ]
-      // children: [
-      // ],
-    );
+    // return Flexible(
+    //   child: ListView.builder(
+    //     scrollDirection: Axis.vertical,
+    //     // shrinkWrap: true,
+    //     itemCount: stats.length,
+    //     itemBuilder: (context, index) {
+    //       final item = stats.entries.elementAt(index);
+    //       return SizedBox(
+    //         height: 10,
+    //         child: Text("${item.key}: ${item.value}"),
+    //       );
+    //     },
+    //   ),
+    //   // ]
+    //   // children: [
+    //   // ],
+    // );
 
     // return ListView.builder(
     //   itemCount: stats.length,
@@ -178,14 +203,16 @@ class PlayerStatsSection extends StatelessWidget {
         PlayerStatsTitle(statsTitle: "${player.name} Stats"),
 
         Expanded(
-          child: Column(
-            children: [
-              for (MapEntry<String, int> item in player.stats.entries)
-                PlayerStatsItem(item: item),
-            ],
-          ),
+          child: PlayerStatsList(player: player),
+          // child: Column(
+          //   children: [
+          //     for (MapEntry<String, int> item in player.stats.entries)
+          //       PlayerStatsItem(item: item),
+          //   ],
+          // ),
         ),
       ],
+      // ),
     );
   }
 }
