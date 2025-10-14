@@ -1,7 +1,11 @@
 import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
 
-import 'dart:developer';
+import 'package:logging/logging.dart';
+// import 'package:flutter_logs/flutter_logs.dart';
+
+final Logger log = Logger("player_scored_widget");
+
 
 class PlayerScoredTitle extends StatelessWidget {
   const PlayerScoredTitle({super.key, required this.scoredTitle});
@@ -78,8 +82,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
         border: Border.all(
           color: theme.colorScheme.onPrimaryContainer,
           width: 2,
-          strokeAlign: BorderSide.strokeAlignCenter
-
+          strokeAlign: BorderSide.strokeAlignCenter,
         ),
         color: (widget.scoreValue == null)
             ? theme.colorScheme.inversePrimary
@@ -97,8 +100,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
             color: (widget.scoreValue == null)
                 ? theme.colorScheme.primary
                 : theme.colorScheme.primary,
-            fontWeight: FontWeight.bold
-
+            fontWeight: FontWeight.bold,
           ),
 
           textAlign: TextAlign.center,
@@ -124,15 +126,18 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
               widget.player.scoredList.add(int.parse(text));
             }
             // setState(() {
-            print(widget.player.scoredList);
+            log.info(
+              '_PlayerScoredItem widget.player.scoredList: ${widget.player.scoredList}',
+            );
             setState(() {
               widget.player.recalculateToGo();
             });
-            print(widget.player.toGo);
+            log.info(
+              '_PlayerScoredItem widget.player.toGo: ${widget.player.toGo}',
+            );
             // (context as Element).markNeedsBuild();
-            log(
-              'onSubmitted: $text (${text.characters.length})',
-              name: "PlayerScoredItem",
+            log.info(
+              '_PlayerScoredItem onSubmitted: $text (${text.characters.length})',
             );
           },
         ),
