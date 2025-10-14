@@ -202,17 +202,8 @@ class PlayerStatsSection extends StatelessWidget {
       children: [
         PlayerStatsTitle(statsTitle: "${player.name} Stats"),
 
-        Expanded(
-          child: PlayerStatsList(player: player),
-          // child: Column(
-          //   children: [
-          //     for (MapEntry<String, int> item in player.stats.entries)
-          //       PlayerStatsItem(item: item),
-          //   ],
-          // ),
-        ),
+        Expanded(child: SingleChildScrollView(child: PlayerStatsList(player: player))),
       ],
-      // ),
     );
   }
 }
