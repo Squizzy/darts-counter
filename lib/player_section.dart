@@ -58,15 +58,35 @@ class PlayerSection extends StatelessWidget {
                   children: [
                     // Player A layout
                     Expanded(flex: 3, child: PlayerStatsSection(player: player)),
-                    Expanded(flex: 1, child: PlayerScoredSection(player: player)),
-                    Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+
+
+                    // Expanded(flex: 2, child: 
+                      // SingleChildScrollView(scrollDirection: Axis.vertical, child: 
+                        // Row(children: [
+                          // PlayerScoredSection(player: player),
+                          // PlayerToGoSection(player: player),
+                          // Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                          // Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                        // ],),
+                      // )
+                    // ),
+
+                    // Expanded(child: Column(children: [
+                      Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                      Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                    // ],))
+                    // SingleChildScrollView( child: Column(children: [
+                    // ])),
                   ]))
 
               : Expanded(child: Row(
                   children: [
                     // Player B layout
-                    Expanded(flex: 1, child: PlayerScoredSection(player: player)),
-                    Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                    // Column(children: [
+                      Expanded(flex: 1, child: PlayerScoredSection(player: player)),
+                      Expanded(flex: 1, child: PlayerToGoSection(player: player)),
+                    // ]),
+
                     Expanded(flex: 3, child: PlayerStatsSection(player: player)),
                   ]),),
 

@@ -154,7 +154,7 @@ class PlayerToGoSection extends StatelessWidget {
       children: [
         PlayerToGoTitle(toGoTitle: "To go"),
         // PlayerToGoItem(toGoValue: player.toGo[0]),
-        Expanded(child: PlayerToGoList(player: player)),
+        PlayerToGoList(player: player),
       ],
     );
   }
