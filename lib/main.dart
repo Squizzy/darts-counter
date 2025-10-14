@@ -3,15 +3,22 @@ import 'background_widget.dart';
 import 'player_class.dart';
 import 'player_section.dart';
 import 'shortcuts_widget.dart';
-import 'darts_appbar.dart';
+
+import 'package:logging/logging.dart';
+// import 'darts_appbar.dart';
 
 // Temp import while developing
-import 'player_stats_widgets.dart';
-import 'player_scored_widgets.dart';
-import 'player_togo_widgets.dart';
+// import 'player_stats_widgets.dart';
+// import 'player_scored_widgets.dart';
+// import 'player_togo_widgets.dart';
 // Background image: https://www.pexels.com/photo/dartboard-hanging-on-wall-at-home-4061482/
 
 void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+
   runApp(const MyApp());
 }
 
@@ -37,60 +44,67 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class DartsAppBar extends StatelessWidget {
-  const DartsAppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      title: const Text('Darts Counter'),
-    );
-  }
-}
 
 class _MyHomePageState extends State<MyHomePage> {
   PlayerInfo playerA = PlayerInfo(iD: true, name: "player A", startValue: 701);
   PlayerInfo playerB = PlayerInfo(iD: false, name: "player B", startValue: 501);
 
   void addPlayerADummyData() {
-    playerA.scored = [1, 2, 3];
-    playerA.toGo = [701, 623, 512];
-    playerA.stats = {"Start Value": playerA.startValue, 
-                    "Rounds launched": playerA.scored.length};
-    playerB.scored = [4, 5, 6];
-    playerB.toGo = [701, 610, 560];
-    playerB.stats = {"Start Value": playerB.startValue, 
-                    "Rounds launched": playerB.scored.length};
+    playerA.addScoredValue(25);
+    // playerA.addScoredValue(120);
+    // playerA.addScoredValue(17);
+
+    // playerA.scoredList = [1, 2, 3];
+    // playerA.toGo = [701, 623, 512];
+    playerA.stats = {
+      "Start Value": playerA.startValue,
+      "Rounds launched": playerA.scoredList.length,
+    };
+    playerB.addScoredValue(19);
+    playerB.addScoredValue(21);
+    playerB.addScoredValue(38);
+    // playerB.scoredList = [4, 5, 6];
+    // playerB.toGo = [701, 610, 560];
+    playerB.stats = {
+      "Start Value": playerB.startValue,
+      "Rounds launched": playerB.scoredList.length,
+    };
   }
 
-  void recordAScore(int value) {
-    // TODO: This should be moved to PlayerInfo
-    setState(() {
-      int remainder = playerA.remainder() - value;
 
-      if (remainder > 0) {
-        playerA.scored.add(value);
-        playerA.toGo.add(remainder);
-      } else {
-        // Do something
-      }
-    });
-  }
+  // // void recordAScore(int value) {
+  // //   // TODO: This should be moved to PlayerInfo
+  // //   setState(() {
+  // //     int remainder = playerA.remainder() - value;
 
-  void recordBScore(int value) {
-    // TODO: This should be moved to PlayerInfo
-    setState(() {
-      int remainder = playerB.remainder() - value;
+  // //     if (remainder > 0) {
+  // //       playerA.scoredList.add(value);
+  // //       playerA.toGo.add(remainder);
+  // //     } else {
+  // //       // Do something
+  // //     }
+  // //   });
+  // // }
 
-      if (remainder > 0) {
-        playerB.scored.add(value);
-        playerB.toGo.add(remainder);
-      } else {
-        // Do something
-      }
-    });
-  }
+  // // void recordBScore(int value) {
+  // //   // TODO: This should be moved to PlayerInfo
+  // //   setState(() {
+  // //     int remainder = playerB.remainder() - value;
+
+  // //     if (remainder > 0) {
+  // //       playerB.scoredList.add(value);
+  // //       playerB.toGo.add(remainder);
+  // //     } else {
+  // //       // Do something
+  // //     }
+  // //   });
+  // }
+
+  // void recalculate(PlayerInfo player) {
+  //     setState((){
+  //       player.recalculateToGo();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -108,16 +122,23 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Container(alignment: Alignment.center, child: Background()),
 
-          Column(children: [
-            Expanded(child: 
-              Row(children: [
-                Expanded(child: PlayerSection(player: playerA)),
-                Expanded(child: PlayerSection(player: playerB)),
-              ],)
-            ),
+          Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: PlayerSection(player: playerA)),
+                    Expanded(child: PlayerSection(player: playerB)),
+                  ],
+                ),
+              ),
 
-          Container(alignment: Alignment.bottomCenter, child: ShortcutButtons()),
-          ]),
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: ShortcutButtons(),
+              ),
+            ],
+          ),
         ],
       ),
       // )
