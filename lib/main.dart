@@ -16,7 +16,7 @@ import 'package:logging/logging.dart';
 void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.time}: ${record.message}');
+    debugPrint('${record.time}: ${record.level.name}: ${record.message}');
   });
 
   runApp(const MyApp());
@@ -44,7 +44,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
   PlayerInfo playerA = PlayerInfo(iD: true, name: "player A", startValue: 701);
   PlayerInfo playerB = PlayerInfo(iD: false, name: "player B", startValue: 501);
@@ -70,7 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "Rounds launched": playerB.scoredList.length,
     };
   }
-
 
   // // void recordAScore(int value) {
   // //   // TODO: This should be moved to PlayerInfo
