@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'background_widget.dart';
 import 'player_class.dart';
 import 'player_section.dart';
@@ -13,10 +14,56 @@ import 'package:logging/logging.dart';
 // import 'player_togo_widgets.dart';
 // Background image: https://www.pexels.com/photo/dartboard-hanging-on-wall-at-home-4061482/
 
+String debugLevelColour(String level) {
+  int backColour = 40;
+  int foreColour = 30;
+
+  // backColour =  "10";  // Black
+  // backColour =  "00";  // Reset
+
+  switch (level) {
+    case "OFF":
+      // foreColour += 4; // White
+      foreColour += 7; // White
+    case "SHOUT":
+      foreColour += 5;
+    case "SEVERE":
+      foreColour += 1; // Red
+    case "WARNING":
+      foreColour += 3; // Yellow
+    case "INFO":
+      foreColour += 6; // Cyan
+      // foreColour += 7; // White
+    case "CONFIG":
+      foreColour += 4; // Blue
+    case "FINE":
+      // foreColour += ; 
+    case "FINER":
+    case "FINEST":
+      foreColour += 2; // Green
+  }
+
+  String colour = '\x1b[${foreColour}m';
+  // print(colour + "sss");
+
+  return colour;
+}
+
 void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
-    debugPrint('${record.time}: ${record.level.name}: ${record.message}');
+
+    DateTime rTime = record.time;
+
+    String rLevel = record.level.name;
+    String rColour = debugLevelColour(rLevel);
+    String rColourEnd = "\x1b[0m";
+
+    String rLevelName = rColour + rLevel + rColourEnd;
+
+    String rMessage = record.message;
+
+    debugPrint('$rTime: $rLevelName: $rMessage');
   });
 
   runApp(const MyApp());
