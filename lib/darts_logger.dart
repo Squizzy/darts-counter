@@ -82,7 +82,9 @@ String debugLevelColour(String level) {
 }
 
 void initLogger() {
-  Logger.root.level = Level.ALL;
+  
+  Logger.root.level = kDebugMode ? Level.ALL : Level.OFF;
+  
   Logger.root.onRecord.listen((record) {
     final timeColour = debugLevelColour("time");
     final loggerNameColour = debugLevelColour("loggerName");
