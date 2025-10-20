@@ -97,7 +97,7 @@ class PlayerToGoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    log.finer("Preparing ${player.name} ToGo list");;
+    log.finer("Preparing ${player.name} ToGo list");
 
     return Container(
       // color: theme.colorScheme.primary,
