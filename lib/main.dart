@@ -14,7 +14,6 @@ import 'darts_logger.dart';
 // import 'player_togo_widgets.dart';
 // Background image: https://www.pexels.com/photo/dartboard-hanging-on-wall-at-home-4061482/
 
-
 void main() {
   initLogger();
 
@@ -47,31 +46,35 @@ class _MyHomePageState extends State<MyHomePage> {
   PlayerInfo playerA = PlayerInfo(iD: true, name: "player A", startValue: 701);
   PlayerInfo playerB = PlayerInfo(iD: false, name: "player B", startValue: 501);
 
-  void addPlayerADummyData() {
-    playerA.addScoredValue(25);
-    // playerA.addScoredValue(120);
-    // playerA.addScoredValue(17);
+  void addPlayerDummyData() {
+    if (playerA.scoredList.isEmpty) {
+      playerA.addScoredValue(25);
+      // playerA.addScoredValue(120);
+      // playerA.addScoredValue(17);
 
-    // playerA.scoredList = [1, 2, 3];
-    // playerA.toGo = [701, 623, 512];
-    playerA.stats = {
-      "Start Value": playerA.startValue,
-      "Rounds launched": playerA.scoredList.length,
-    };
-    playerB.addScoredValue(19);
-    playerB.addScoredValue(21);
-    playerB.addScoredValue(38);
-    // playerB.scoredList = [4, 5, 6];
-    // playerB.toGo = [701, 610, 560];
-    playerB.stats = {
-      "Start Value": playerB.startValue,
-      "Rounds launched": playerB.scoredList.length,
-    };
+      // playerA.scoredList = [1, 2, 3];
+      // playerA.toGo = [701, 623, 512];
+      playerA.stats = {
+        "Start Value": playerA.startValue,
+        "Rounds launched": playerA.scoredList.length,
+      };
+    }
+    if (playerB.scoredList.isEmpty) {
+      playerB.addScoredValue(19);
+      playerB.addScoredValue(21);
+      playerB.addScoredValue(38);
+      // playerB.scoredList = [4, 5, 6];
+      // playerB.toGo = [701, 610, 560];
+      playerB.stats = {
+        "Start Value": playerB.startValue,
+        "Rounds launched": playerB.scoredList.length,
+      };
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    addPlayerADummyData();
+    addPlayerDummyData();
 
     return Scaffold(
       // appBar: DartsAppBar(),
