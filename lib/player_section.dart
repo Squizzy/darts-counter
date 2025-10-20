@@ -6,6 +6,9 @@ import 'player_togo_widgets.dart';
 import 'player_name.dart';
 import 'player_remainder.dart';
 
+import 'package:logging/logging.dart';
+final Logger log = Logger("player_section_widget");
+
 class PlayerDebugSection extends StatelessWidget {
   const PlayerDebugSection({super.key, required this.player});
 
@@ -44,7 +47,7 @@ class PlayerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
+    log.fine("Displaying ${player.name} section");
     return Container(
       padding: EdgeInsets.all(8.0),
 
@@ -90,7 +93,7 @@ class PlayerSection extends StatelessWidget {
                     Expanded(flex: 3, child: PlayerStatsSection(player: player)),
                   ]),),
 
-          PlayerRemainder(remainder: player.remainder()),
+          PlayerRemainder(player: player),
         ],
       ),
     );
