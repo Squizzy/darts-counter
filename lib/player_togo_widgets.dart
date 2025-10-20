@@ -1,6 +1,9 @@
 import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
 
+import 'package:logging/logging.dart';
+final Logger log = Logger("player_togo_widget");
+
 class PlayerToGoTitle extends StatelessWidget {
   const PlayerToGoTitle({super.key, required this.toGoTitle});
 
@@ -94,6 +97,7 @@ class PlayerToGoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    log.finer("Preparing ${player.name} ToGo list");;
 
     return Container(
       // color: theme.colorScheme.primary,
