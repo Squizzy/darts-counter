@@ -2,10 +2,7 @@ import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
 
 import 'package:logging/logging.dart';
-// import 'package:flutter_logs/flutter_logs.dart';
-
 final Logger log = Logger("player_scored_widget");
-
 
 class PlayerScoredTitle extends StatelessWidget {
   const PlayerScoredTitle({super.key, required this.scoredTitle});
@@ -157,6 +154,7 @@ class PlayerScoredList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    log.finer("Preparing ${player.name} scored list");
 
     return DecoratedBox(
       decoration: BoxDecoration(
