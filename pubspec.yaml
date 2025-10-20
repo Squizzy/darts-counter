@@ -1,5 +1,5 @@
 name: first_app
-description: "A new Flutter project."
+description: "A counter and stats for darts games."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -36,7 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   logging: ^1.3.0
-  # flutter_logs: [latest_version]
+
+  # intl: any
 
 dev_dependencies:
   flutter_test:
