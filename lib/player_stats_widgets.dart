@@ -1,6 +1,9 @@
 import 'package:first_app/player_class.dart';
 import 'package:flutter/material.dart';
 
+import 'package:logging/logging.dart';
+final Logger log = Logger("player_stats_widget");
+
 class PlayerStatsTitle extends StatelessWidget {
   const PlayerStatsTitle({super.key, required this.statsTitle});
 
@@ -49,8 +52,7 @@ class PlayerStatsItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.inversePrimary,
         border: Border.all(color: theme.colorScheme.inversePrimary),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-
+        borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       height: 20,
       child: Text(
@@ -73,21 +75,23 @@ class PlayerStatsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log.finer("Preparing ${player.name} stats list");
+
     if (player.stats.isNotEmpty) {
       return DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: Theme.of(context).colorScheme.inversePrimary,
-              // border:Border.all(style: BorderStyle.none, width: 5 ),
-              // border:BoxBorder.all(style: BorderStyle.none, width: 5 )
-              
-            ), 
-            child: Column(
-        children: [
-          for (MapEntry<String, int> item in player.stats.entries)
-            PlayerStatsItem(item: item),
-        ],
-            ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Theme.of(context).colorScheme.inversePrimary,
+
+          // border:Border.all(style: BorderStyle.none, width: 5 ),
+          // border:BoxBorder.all(style: BorderStyle.none, width: 5 )
+        ),
+        child: Column(
+          children: [
+            for (MapEntry<String, int> item in player.stats.entries)
+              PlayerStatsItem(item: item),
+          ],
+        ),
       );
     } else {
       return Container();
@@ -202,7 +206,9 @@ class PlayerStatsSection extends StatelessWidget {
       children: [
         PlayerStatsTitle(statsTitle: "${player.name} Stats"),
 
-        Expanded(child: SingleChildScrollView(child: PlayerStatsList(player: player))),
+        Expanded(
+          child: SingleChildScrollView(child: PlayerStatsList(player: player)),
+        ),
       ],
     );
   }
