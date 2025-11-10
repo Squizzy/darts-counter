@@ -40,6 +40,34 @@ class PlayerScoredTitle extends StatelessWidget {
   }
 }
 
+class PlayerScoredInitialSpace extends StatelessWidget {
+  const PlayerScoredInitialSpace({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+      return Padding(
+        padding: EdgeInsets.all(0.0),
+        child: Container(
+        height: 30,
+        width: double.infinity,
+        alignment: Alignment.center,
+
+        child: Text(
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          style: TextStyle(
+            color: theme.colorScheme.primary,
+            fontSize: 15,
+            fontWeight: FontWeight.bold
+          ),
+          "",
+        ),
+      ),
+    );
+  }
+}
+
 class PlayerScoredItem extends StatefulWidget {
   const PlayerScoredItem({
     super.key,
