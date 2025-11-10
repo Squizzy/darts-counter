@@ -188,7 +188,8 @@ class _PlayerScoredList extends State<PlayerScoredList> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    log.finer("Preparing ${player.name} scored list");
+
+    log.finer("Preparing ${widget.player.name} scored list");
 
     return DecoratedBox(
       decoration: BoxDecoration(
