@@ -73,10 +73,12 @@ class PlayerScoredItem extends StatefulWidget {
     super.key,
     required this.player,
     required this.scoreValue,
+    required this.onChanged,
   });
 
   final PlayerInfo player;
   final int? scoreValue;
+  final VoidCallback? onChanged;
 
   @override
   State<StatefulWidget> createState() => _PlayerScoredItem();
@@ -157,6 +159,9 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
             setState(() {
               widget.player.recalculateToGo();
             });
+
+            widget.onChanged?.call();
+
             log.info(
               '_PlayerScoredItem widget.player.toGo: ${widget.player.toGo}',
             );
