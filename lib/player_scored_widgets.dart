@@ -222,6 +222,7 @@ class _PlayerScoredList extends State<PlayerScoredList> {
   }
 }
 
+
 class PlayerScoredSection extends StatelessWidget {
   const PlayerScoredSection({super.key, required this.player});
 
@@ -229,13 +230,9 @@ class PlayerScoredSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return PlayerScoredTitle(scoredTitle: "Scored");
-    // return PlayerScoredItem(scoreValue: null);
-    // return PlayerScoredList(scoredPointsList: player.scored);
     return Column(
       children: [
         PlayerScoredTitle(scoredTitle: "Scored"),
-        // PlayerScoredItem(scoreValue: (player.scored.isEmpty) ? null : player.scored[2]),
         Expanded(child: PlayerScoredList(player: player)),
       ],
     );
