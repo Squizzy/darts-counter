@@ -201,14 +201,17 @@ class _PlayerScoredList extends State<PlayerScoredList> {
         color: theme.colorScheme.primary,
       ),
 
-      child: Column(
-        children: [
-          PlayerScoredItem(scoreValue: null, player: player),
-          for (int scoredPoints in player.scoredList)
-            PlayerScoredItem(scoreValue: scoredPoints, player: player),
-          PlayerScoredItem(scoreValue: null, player: player),
-        ],
-      ),
+       child: ListView.builder(
+        itemCount: widget.player.scoredToDisplay().length + 1,
+        itemBuilder:(context, index) {
+          return (index == 0)
+            ? PlayerScoredInitialSpace()
+            : PlayerScoredItem(
+                player: widget.player, 
+                scoreValue: widget.player.scoredToDisplay()[index - 1],
+                onChanged: () => setState(() {}));
+        },
+      )
     );
   }
 }
