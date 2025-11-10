@@ -66,4 +66,13 @@ class PlayerInfo {
       toGo.add(toGo[round] - scoredList[round]);
     }
   }
+
+  List<int?> scoredToDisplay() {
+    List<int?> std = [];
+    std += scoredList;
+    std.add(null); // add a line for a new entry
+    
+    return std;
+  }
+
 }
