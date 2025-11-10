@@ -72,12 +72,14 @@ class PlayerScoredItem extends StatefulWidget {
   const PlayerScoredItem({
     super.key,
     required this.player,
-    required this.scoreValue,
+    // required this.scoreValue,
+    required this.scoredIndex,
     required this.onChanged,
   });
 
   final PlayerInfo player;
-  final int? scoreValue;
+  // final int? scoreValue;
+  final int scoredIndex;
   final VoidCallback? onChanged;
 
   @override
@@ -103,6 +105,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final TextEditingController myController = TextEditingController();
+    int? scoreValue = widget.player.scoredToDisplay()[widget.scoredIndex];
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -111,7 +114,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
           width: 2,
           strokeAlign: BorderSide.strokeAlignCenter,
         ),
-        color: (widget.scoreValue == null)
+        color: (scoreValue == null)
             ? theme.colorScheme.inversePrimary
             : theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -124,7 +127,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
           controller: myController,
           style: TextStyle(
             fontSize: 15,
-            color: (widget.scoreValue == null)
+            color: (scoreValue == null)
                 ? theme.colorScheme.primary
                 : theme.colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -136,11 +139,11 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
             border: InputBorder.none,
             isDense: true,
             contentPadding: EdgeInsets.all(0),
-            hintText: (widget.scoreValue == null)
+            hintText: (scoreValue == null)
                 ? "Enter score"
-                : widget.scoreValue.toString(),
+                : scoreValue.toString(),
             hintStyle: TextStyle(
-              color: (widget.scoreValue == null)
+              color: (scoreValue == null)
                   ? theme.colorScheme.primary
                   : theme.colorScheme.primary,
               fontSize: 15,
@@ -150,7 +153,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
 
           onSubmitted: (text) {
             if (int.tryParse(text) != null) {
-              widget.player.addScoredValue(int.parse(text));
+              widget.player.addScoredValue(int.parse(text), widget.scoredIndex);
             }
             // setState(() {
             log.info(
@@ -206,7 +209,7 @@ class _PlayerScoredList extends State<PlayerScoredList> {
         border: Border.all(color: theme.colorScheme.primary),
         color: theme.colorScheme.primary,
       ),
-
+          
        child: ListView.builder(
         itemCount: widget.player.scoredToDisplay().length + 1,
         itemBuilder:(context, index) {
@@ -214,7 +217,8 @@ class _PlayerScoredList extends State<PlayerScoredList> {
             ? PlayerScoredInitialSpace()
             : PlayerScoredItem(
                 player: widget.player, 
-                scoreValue: widget.player.scoredToDisplay()[index - 1],
+                // scoreValue: widget.player.scoredToDisplay()[index - 1],
+                scoredIndex: index - 1,
                 onChanged: () => setState(() {}));
         },
       )

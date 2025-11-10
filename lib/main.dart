@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void addPlayerDummyData() {
     if (playerA.scoredList.isEmpty) {
-      playerA.addScoredValue(25);
+      playerA.addScoredValue(25, 0);
       // playerA.addScoredValue(120);
       // playerA.addScoredValue(17);
 
@@ -60,9 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
       };
     }
     if (playerB.scoredList.isEmpty) {
-      playerB.addScoredValue(19);
-      playerB.addScoredValue(21);
-      playerB.addScoredValue(38);
+      playerB.addScoredValue(19, 0);
+      playerB.addScoredValue(21, 1);
+      playerB.addScoredValue(38, 2);
       // playerB.scoredList = [4, 5, 6];
       // playerB.toGo = [701, 610, 560];
       playerB.stats = {

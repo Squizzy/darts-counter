@@ -44,7 +44,7 @@ class PlayerInfo {
     return true;
   }
 
-  bool addScoredValue(int value) {
+  bool addScoredValue(int value, int index) {
     // store the score if the value is ok, then regenerate the ToGo list
     log.info("addScoredValue reached");
 
@@ -52,7 +52,14 @@ class PlayerInfo {
 
     if (!isScoredValuePermissible(value)) return false;
 
-    scoredList.add(value);
+    if (index < scoredList.length) 
+    {
+      scoredList[index] = value;
+    }
+    else
+    {
+      scoredList.add(value);
+    }
 
     recalculateToGo();
 
