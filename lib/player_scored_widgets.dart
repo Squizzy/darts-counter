@@ -150,7 +150,7 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
 
           onSubmitted: (text) {
             if (int.tryParse(text) != null) {
-              widget.player.scoredList.add(int.parse(text));
+              widget.player.addScoredValue(int.parse(text));
             }
             // setState(() {
             log.info(
