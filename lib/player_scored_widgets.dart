@@ -171,13 +171,19 @@ class _PlayerScoredItem extends State<PlayerScoredItem> {
   }
 }
 
-class PlayerScoredList extends StatelessWidget {
-  const PlayerScoredList({super.key, required this.player});
-  // const PlayerScoredList({super.key, required this.scoredPointsList});
-
-  // final List<int> scoredPointsList;
+class PlayerScoredList extends StatefulWidget {
+  const PlayerScoredList({
+    super.key,
+    required this.player,
+  });
 
   final PlayerInfo player;
+
+  @override
+  State<StatefulWidget> createState() => _PlayerScoredList();
+}
+
+class _PlayerScoredList extends State<PlayerScoredList> {
 
   @override
   Widget build(BuildContext context) {
